@@ -31,7 +31,7 @@ main {
 h1 { font-family: 'Inter'; font-size: 20px; margin-bottom: 1em; }
 p { font-family: 'Roboto'; }
 
-.main-content {
+.main-container {
     background-color: white;
     padding: 20px;
     width: 100%;
@@ -56,7 +56,29 @@ footer {
     padding: 20px 0 20px;
 }
 
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px auto;
+    font-family: 'Roboto';
+    color: white;
+}
+
+th, td {
+    padding: 0.5em;
+}
+
+td {
+    color: green;
+}
+
+th {
+    background-color: rgb(111, 199, 144);
+}
+
+th:first-child { border-top-left-radius: 0.3em; }
+th:last-child { border-top-right-radius: 0.3em; }
+
 @media only screen and (max-width: 499px) {
-    body { background-color: green; }
     .wrapper { width: 100%; }
 }
