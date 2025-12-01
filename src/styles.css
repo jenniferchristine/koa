@@ -61,23 +61,16 @@ table {
     width: 100%;
     margin: 20px auto;
     font-family: 'Roboto';
-    color: white;
+    color: rgb(77, 77, 77);
 }
 
 th, td {
     padding: 0.5em;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
 }
 
-td {
-    color: green;
-}
-
-th {
-    background-color: rgb(111, 199, 144);
-}
-
-th:first-child { border-top-left-radius: 0.3em; }
-th:last-child { border-top-right-radius: 0.3em; }
+tr:nth-child(even) { background-color: #f2f2f2; }
 
 @media only screen and (max-width: 499px) {
     .wrapper { width: 100%; }

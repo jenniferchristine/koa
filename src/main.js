@@ -19,9 +19,9 @@ bookForm.addEventListener("submit", (e) => {
 });
 
 function renderTable() {
-    bookTableBody.innerHTML = "";
+    //bookTableBody.innerHTML = "";
     const tr = document.createElement("tr");
-    
+
     books.forEach(book => {
         tr.innerHTML = `
         <td>${book.title}</td>
