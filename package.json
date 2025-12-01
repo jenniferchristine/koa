@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "parcel src/index.html & nodemon server.js"
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html"
   },
   "author": "Jennifer Jakobsson",
   "license": "ISC",
@@ -14,5 +15,11 @@
     "@koa/router": "^14.0.0",
     "koa": "^3.1.1",
     "parcel": "^2.16.1"
-  }
+  },
+    "targets": {
+      "main": false,
+      "default": {
+        "distDir": "./dist"
+      }
+    }
 }
