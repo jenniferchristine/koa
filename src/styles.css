@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans&family=Inter:opsz,wght@14..32,100..900&family=Roboto&display=swap');
+
+* { padding: 0; margin: 0; box-sizing: border-box; }
+
+body {
+    background-color: rgb(77, 77, 77);
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.wrapper {
+    width: 500px;
+    margin-top: 2em;
+}
+
+header {
+    color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main {
+    background-color: rgb(34, 34, 34);
+    width: 100%;
+    border-radius: 0.2em;
+}
+
+.main-content {
+    background-color: white;
+    padding: 20px;
+    width: 100%;
+    border-radius: 0.2em;
+    color: rgb(54, 54, 54);
+    margin: 0.5em;
+}
+
+footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+    color: rgb(136, 136, 136);
+    padding: 20px 0 20px;
+}
+
+h1 { font-family: 'Inter'; font-size: 20px; margin-bottom: 1em; }
+p { font-family: 'Roboto';}
+
+.container {
+    padding: 20px;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+
+.header-icon { font-size: 70px!important; }
+.header-headline { font-family: 'Instrument Sans'; font-size: 30px; margin-top: 10px; }
+
+
+@media only screen and (max-width: 499px) {
+    body { background-color: green; }
+    .wrapper { width: 100%; }
+}
