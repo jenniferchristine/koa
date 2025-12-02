@@ -21,15 +21,6 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => { console.log("Connected to MongoDB");})
   .catch(err => { console.error("Connection failed", err);});
 
-  // skapa bookschema
-  const bookSchema = new mongoose.Schema({
-    title: { type: String, required: true },
-    publication: { type: Number, required: true },
-    read: { type: Boolean, default: false }
-  });
-
-  const Book = mongoose.model("Book", bookSchema);
-
   // hämta böcker
   router.get("/books", async ctx => {
     ctx.body = await Book.find();
