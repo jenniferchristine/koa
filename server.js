@@ -13,7 +13,7 @@ const app = new Koa();
 app.use(cors());
 app.use(bodyParser());
 app.use(bookRoutes.routes());
-app.use(router.allowedMethods());
+app.use(bookRoutes.allowedMethods());
 
 // anslut till mongodb
 mongoose.connect(process.env.MONGO_URI)
