@@ -5,7 +5,7 @@ app.use(serve("./dist"));*/
 
 const Koa = require("koa");
 const Router = require("@koa/router");
-//const bodyParser = require("koa-bodyparser");
+const bodyParser = require("koa-bodyparser");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
@@ -28,3 +28,12 @@ mongoose.connect(process.env.MONGO_URI)
     console.error("Anslutningen misslyckas", err);
     process.exit(1);
   });
+
+  // skapa bookschema
+  const bookSchema = new mongoose.Schema({
+    title: { type: String, required: true },
+    publication: { type: Number, required: true },
+    read: { type: Boolean, default: false }
+  });
+
+  const Book = mongoose.model("Book", bookSchema);
