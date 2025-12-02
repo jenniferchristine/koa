@@ -44,7 +44,7 @@ mongoose.connect(process.env.MONGO_URI)
   });
 
   // hämta böcker genom id
-  router.get("/books/:id", async ctx => {
+  router.get("/books/_id", async ctx => {
     const book = await Book.findById(ctx.params.id);
     if (!book) ctx.throw(404, "Book not found");
     ctx.body = book;
