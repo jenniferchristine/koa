@@ -25,7 +25,7 @@ exports.createBook = async (ctx) => {
 };
 
 // uppdatera en bok
-exports.updatedBook = async (ctx) => {
+exports.updateBook = async (ctx) => {
     const id = ctx.params.id;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {

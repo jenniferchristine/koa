@@ -2,11 +2,12 @@
 
 const Router = require("@koa/router");
 const router = new Router();
+const controller = require("../controllers/bookController");
 
-router.get("/books");
-router.get("/books/:id");
-router.post("/book");
-router.put("/books/:id");
-router.delete("/books/:id");
+router.get("/books", controller.getAllBooks);
+router.get("/books/:id", controller.getBookById);
+router.post("/book", controller.createBook);
+router.put("/books/:id", controller.updateBook);
+router.delete("/books/:id", controller.deleteBook);
 
 module.exports = router;
