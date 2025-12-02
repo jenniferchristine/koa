@@ -14,12 +14,14 @@
   "dependencies": {
     "@koa/router": "^14.0.0",
     "koa": "^3.1.1",
+    "koa-bodyparser": "^4.4.1",
+    "mongoose": "^9.0.0",
     "parcel": "^2.16.1"
   },
-    "targets": {
-      "main": false,
-      "default": {
-        "distDir": "./dist"
-      }
+  "targets": {
+    "main": false,
+    "default": {
+      "distDir": "./dist"
     }
+  }
 }
