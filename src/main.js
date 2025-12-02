@@ -1,34 +1,62 @@
 "use strict";
 
-const bookForm = document.getElementById("bookForm");
-const bookTableBody = document.querySelector("#bookTable tbody");
-const books = [];
+document.addEventListener("DOMContentLoaded", () => {
+    const bookForm = document.getElementById("bookForm");
+    const bookTableBody = document.querySelector("#bookTable tbody");
 
-bookForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+    // hämtar böcker när siddan laddas
+    async function fetchBooks() {
+        try {
+            const res = await fetch("http://localhost:5000/books");
+            const books = await res.json();
+            renderTable(books);
+        } catch (err) {
+            console.error("Resultatet kunde inte hämtas: ", err);
+        }
+    }
 
-    const title = document.getElementById("title").value;
-    const year = document.getElementById("year").value;
-    const read = document.getElementById("read").value;
+    // renderar tabellen
+    function renderTable(books) {
+        bookTableBody.innerHTML = "";
 
-    const book = { title, year, read };
-    books.push(book);
-
-    renderTable();
-    bookForm.reset();
-});
-
-function renderTable() {
-    //bookTableBody.innerHTML = "";
-    const tr = document.createElement("tr");
-
-    books.forEach(book => {
-        tr.innerHTML = `
+        books.forEach(book => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
         <td>${book.title}</td>
-        <td>${book.year}</td>
+        <td>${book.publication}</td>
         <td>${book.read ? 'Ja' : 'Nej'}</td>
         `;
 
-        bookTableBody.appendChild(tr);
+            bookTableBody.appendChild(tr);
+        });
+    }
+
+    // skapar ny bok
+    bookForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const title = document.getElementById("title").value;
+        const publication = document.getElementById("publication").value;
+        const read = document.getElementById("read").checked;
+
+        const newBook = { title, publication, read };
+
+        try {
+            const res = await fetch("http://localhost:5000/books", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(newBook)
+            });
+
+            if (!res.ok) throw new Error("Boken kunde inte läggas till");
+            fetchBooks();
+
+            bookForm.reset();
+        } catch (err) {
+            console.error(err);
+        }
     });
-}
+
+    // laddar böcker
+    fetchBooks();
+});

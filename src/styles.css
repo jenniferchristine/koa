@@ -10,7 +10,7 @@ body {
     min-height: 100vh;
 }
 
-.wrapper { width: 500px; margin-top: 2em; }
+.wrapper { width: 400px; margin-top: 2em; }
 
 header {
     color: rgb(255, 255, 255);
@@ -115,8 +115,11 @@ label {
 
 tr:nth-child(even) { background-color: #f2f2f2; }
 
-@media only screen and (max-width: 499px) {
+@media only screen and (max-width: 399px) {
     .wrapper { width: 100%; }
+    .container { padding: 0; }
+    .main-container { border-radius: 0; }
+    main { border-radius: 0; margin-top: 1em; }
     table, thead, tbody, th, td, tr { display: block; }
     td { display: flex; justify-content: space-between; padding: 6px 0; }
     tr { border-bottom: 2px solid #b8b8b8; }
