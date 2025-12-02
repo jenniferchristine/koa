@@ -37,3 +37,15 @@ mongoose.connect(process.env.MONGO_URI)
   });
 
   const Book = mongoose.model("Book", bookSchema);
+
+  // hämta böcker
+  router.get("/books", async ctx => {
+    ctx.body = await Book.find();
+  });
+
+  // hämta böcker genom id
+  router.get("/books/:id", async ctx => {
+    const book = await Book.findById(ctx.params.id);
+    if (!book) ctx.throw(404, "Book not found");
+    ctx.body = book;
+  });
