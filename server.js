@@ -1,12 +1,10 @@
-/*import serve from "koa-static";
-app.use(serve("./dist"));*/
-
 "use strict";
 
 const Koa = require("koa");
 const Router = require("@koa/router");
 const bodyParser = require("koa-bodyparser");
 const mongoose = require("mongoose");
+const cors = require("@koa/cors");
 require("dotenv").config();
 
 
@@ -20,14 +18,8 @@ if (!process.env.MONGO_URI) {
 
 // anslut till mongodb
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("Ansluten till MongoDB");
-    process.exit(0);
-  })
-  .catch(err => {
-    console.error("Anslutningen misslyckas", err);
-    process.exit(1);
-  });
+  .then(() => { console.log("Ansluten till MongoDB");})
+  .catch(err => { console.error("Anslutningen misslyckas", err);});
 
   // skapa bookschema
   const bookSchema = new mongoose.Schema({
@@ -44,7 +36,7 @@ mongoose.connect(process.env.MONGO_URI)
   });
 
   // hämta böcker genom id
-  router.get("/books/_id", async ctx => {
+  router.get("/books/:id", async ctx => {
     const book = await Book.findById(ctx.params.id);
     if (!book) ctx.throw(404, "Book not found");
     ctx.body = book;
@@ -58,7 +50,7 @@ mongoose.connect(process.env.MONGO_URI)
   });
 
   // uppdatera en bok
-  router.put("/books/_id", async ctx => {
+  router.put("/books/:id", async ctx => {
     const updated = await Book.findByIdAndUpdate(
       ctx.params.id, 
       ctx.request.body,
@@ -69,15 +61,16 @@ mongoose.connect(process.env.MONGO_URI)
   });
 
   // radera en bok
-  router.delete("/books/_id", async ctx => {
+  router.delete("/books/:id", async ctx => {
     const deleted = await Book.findByIdAndDelete(ctx.params.id);
     if (!deleted) ctx.throw("Book not deleted");
     ctx.body = { message: "Book deleted" };
   });
 
   app.use(bodyParser());
+  app.use(cors());
   app.use(router.routes());
   app.use(router.allowedMethods());
 
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => console.log("Server running on port " + PORT));
