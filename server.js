@@ -49,3 +49,21 @@ mongoose.connect(process.env.MONGO_URI)
     if (!book) ctx.throw(404, "Book not found");
     ctx.body = book;
   });
+
+  // uppdatera en bok
+  router.put("/books/_id", async ctx => {
+    const updated = await Book.findByIdAndUpdate(
+      ctx.params.id, 
+      ctx.request.body,
+      { new: true }
+    );
+    if (!updated) ctx.throw(404, "Book not updated");
+    ctx.body = updated;
+  });
+
+  // radera en bok
+  router.delete("/books/_id", async ctx => {
+    const deleted = await Book.findByIdAndDelete(ctx.params.id);
+    if (!deleted) ctx.throw("Book not deleted");
+    ctx.body = { message: "Book deleted" };
+  });
