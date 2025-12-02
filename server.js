@@ -50,6 +50,13 @@ mongoose.connect(process.env.MONGO_URI)
     ctx.body = book;
   });
 
+  // skapa en bok
+  router.post("/books", async ctx => {
+    const newBook = new Book(ctx.request.body);
+    const savedBook = await newBook.save();
+    ctx.body = savedBook;
+  });
+
   // uppdatera en bok
   router.put("/books/_id", async ctx => {
     const updated = await Book.findByIdAndUpdate(
