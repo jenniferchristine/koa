@@ -49,6 +49,3 @@ exports.deleteBook = async (ctx) => {
     if (!deleted) ctx.throw(404, "Book not deleted");
     ctx.body = { message: "Book deleted" };
 };
-
-
-
