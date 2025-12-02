@@ -67,3 +67,10 @@ mongoose.connect(process.env.MONGO_URI)
     if (!deleted) ctx.throw("Book not deleted");
     ctx.body = { message: "Book deleted" };
   });
+
+  app.use(bodyParser());
+  app.use(router.routes());
+  app.use(router.allowedMethods());
+
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => console.log("Server running on port " + PORT));
