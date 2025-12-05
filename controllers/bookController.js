@@ -3,6 +3,16 @@
 const Book = require("../models/Book");
 const mongoose = require("mongoose");
 
+// funktion för mongoose validering
+function formatValidationErrors (err) {
+    const errors = {};
+
+    for (let field in err.errors) {
+        errors[field] = err.errors[field].message;
+    }
+    return errors;
+}
+
 // hämta alla böcker
 exports.getAllBooks = async (ctx) => {
     try {
