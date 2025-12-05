@@ -113,6 +113,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    
+
     // laddar böcker
     fetchBooks();
 });
