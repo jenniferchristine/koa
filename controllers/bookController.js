@@ -3,6 +3,12 @@
 const Book = require("../models/Book");
 const mongoose = require("mongoose");
 
+// funktion för valderingsfel
+/*function validationError {
+    ctx.status = 400;
+    ctx.body = { errors };
+}*/
+
 // hämta alla böcker
 exports.getAllBooks = async (ctx) => {
     try {
@@ -25,10 +31,11 @@ exports.getBookById = async (ctx) => {
 
         const book = await Book.findById(id);
         if (!book) ctx.throw(404, "Book not found");
+
         ctx.body = book;
     } catch (err) {
         console.error("Error in getBookById:", err);
-        ctx.throw(500, "Server error");
+        ctx.throw(err.status || 500, err.message || "Server error");
     }
 };
 
@@ -59,7 +66,7 @@ exports.updateBook = async (ctx) => {
         ctx.body = updated;
     } catch (err) {
         console.error("Error in updateBook: ", err);
-        ctx.throw(500, "Server error");
+        ctx.throw(err.status || 500, err.message || "Server error");
     }
 };
 
@@ -77,6 +84,6 @@ exports.deleteBook = async (ctx) => {
         ctx.body = { message: "Book deleted" };
     } catch (err) {
         console.error("Error in deleteBook: ", err);
-        ctx.throw(500, "Server error");
+        ctx.throw(err.status || 500, err.message || "Server error");
     }
 };
