@@ -25,6 +25,16 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${book.title}</td>
         <td>${book.publication}</td>
         <td>${book.read ? 'Ja' : 'Nej'}</td>
+        <td>
+            <div class="btn-container">
+               <button class="update-btn" data-id="${book._id}">
+                  <span class="symbol material-symbols-outlined">change_circle</span>
+               </button>
+               <button class="delete-btn" data-id="${book._id}">
+                  <span class="symbol material-symbols-outlined">delete</span>
+               </button>
+            </div>
+        </td>
         `;
 
             bookTableBody.appendChild(tr);

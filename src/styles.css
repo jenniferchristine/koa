@@ -89,6 +89,31 @@ button {
 
 button:hover { background-color: rgb(114, 114, 114); }
 
+.btn-container {
+    display: flex;
+    gap: 0.3em;
+}
+
+.update-btn {
+    background-color: rgb(224, 156, 53);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.1em!important;
+    border-radius: 0.1em!important;
+}
+
+.delete-btn {
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.1em!important;
+    border-radius: 0.1em!important;
+}
+
+.symbol { font-size: 20px!important; }
+
 table {
     border-collapse: collapse;
     width: 100%;
