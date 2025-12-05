@@ -28,11 +28,17 @@ exports.createBook = async (ctx) => {
 exports.updateBook = async (ctx) => {
     const id = ctx.params.id;
 
+    console.log("ID: ", id);
+    console.log("BODY: ", ctx.request.body);
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
         ctx.throw(400, "Invalid ID");
     }
 
     const updated = await Book.findByIdAndUpdate(id, ctx.request.body, { new: true });
+
+    console.log("UPDATED: ", updated); 
+    
     if (!updated) ctx.throw(404, "Book not updated");
     ctx.body = updated;
 };

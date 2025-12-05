@@ -40,13 +40,13 @@ document.addEventListener("DOMContentLoaded", () => {
             bookTableBody.appendChild(tr);
         });
 
-        document.querySelectorAll("update-btn").forEach(btn => {
+        document.querySelectorAll(".update-btn").forEach(btn => {
             btn.addEventListener("click", updateBook);
         });
 
-        document.querySelectorAll("delete-btn").forEach(btn => {
+        /*document.querySelectorAll(".delete-btn").forEach(btn => {
             btn.addEventListener("click", deleteBook);
-        });
+        });*/
     }
 
     // skapar ny bok
@@ -74,6 +74,44 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error(err);
         }
     });
+
+    async function updateBook(e) {
+        const id = e.target.closest("button").dataset.id;
+        console.log("ID: ", id);
+
+        const res = await fetch(`http://localhost:5000/books/${id}`);
+        const book = await res.json();
+
+        const newTitle = prompt("Ny titel: ", book.title);
+        const newPublication = Number(prompt("Nytt utgivningsår: ", book.publication));
+        const newRead = prompt("Har du läst den? (ja/nej)").toLowerCase() === "ja";
+
+        const updatedBook = {
+            title: newTitle,
+            publication: newPublication,
+            read: newRead
+        };
+
+        console.log("Ska skickas: ", updatedBook);
+
+        /*try {*/
+        const resPut = await fetch(`http://localhost:5000/books/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedBook)
+        });
+
+        if (!res.ok) throw new Error("Boken kunde inte uppdateras");
+
+        /*fetchBooks();
+    } catch (err) {
+        console.error(err);
+    }*/
+
+        console.log("PUT Status: ", resPut.status);
+        const data = await resPut.json().catch(err => console.log("Ingen JSON:", err));
+        console.log("Respons från servern:", data);
+    }
 
     // laddar böcker
     fetchBooks();
