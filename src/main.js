@@ -36,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
         </td>
         `;
-
             bookTableBody.appendChild(tr);
         });
 
@@ -54,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
 
         const title = document.getElementById("title").value;
-        const publication = document.getElementById("publication").value;
+        const publication = Number(document.getElementById("publication").value);
         const read = document.getElementById("read").checked;
 
         const newBook = { title, publication, read };
@@ -76,43 +75,42 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     async function updateBook(e) {
-        const id = e.target.dataset.id;
-        console.log("ID: ", id);
-        console.log("e.target.dataset: ", e.target.dataset);
-        console.log("e.target: ", e.target);
-
-        const res = await fetch(`http://localhost:5000/books/${id}`);
-        const book = await res.json();
-
-        const newTitle = prompt("Ny titel: ", book.title);
-        const newPublication = Number(prompt("Nytt utgivningsår: ", book.publication));
-        const newRead = prompt("Har du läst den? (ja/nej)").toLowerCase() === "ja";
-
-        const updatedBook = {
-            title: newTitle,
-            publication: newPublication,
-            read: newRead
-        };
-
-        console.log("Ska skickas: ", updatedBook);
-
         try {
-        const res = await fetch(`http://localhost:5000/books/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedBook)
-        });
+            const btn = e.target.closest("button");
+            const id = btn.dataset.id;
 
-        if (!res.ok) throw new Error("Boken kunde inte uppdateras");
+            if (!id) return alert("Fel: ID kunde inte hämtas");
 
-        fetchBooks();
-    } catch (err) {
-        console.error(err);
-    }
+            // hämta aktuell bok
+            const res = await fetch(`http://localhost:5000/books/${id}`);
+            if (!res.ok) throw new Error("Boken kunde inte hämtas");
+            const book = await res.json();
 
-        console.log("PUT Status: ", res.status);
-        const data = await res.json().catch(err => console.log("Ingen JSON:", err));
-        console.log("Respons från servern:", data);
+            // prompt för nya värden
+            const newTitle = prompt("Ny titel: ", book.title);
+            if (!newTitle) return;
+
+            const newPublication = Number(prompt("Nytt utgivningsår: ", book.publication));
+            if (isNaN(newPublication)) return;
+
+            const newRead = prompt("Har du läst den? (ja/nej)").toLowerCase() === "ja";
+
+            const updatedBook = { title: newTitle, publication: newPublication, read: newRead };
+
+            // skicka PUT
+            const resPut = await fetch(`http://localhost:5000/books/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedBook)
+            });
+
+            if (!resPut.ok) throw new Error("Boken kunde inte uppdateras");
+
+            fetchBooks();
+        } catch (err) {
+            console.error("Fel vid uppdatering:", err);
+            alert(err.message);
+        }
     }
 
     // laddar böcker
