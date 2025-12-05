@@ -39,6 +39,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             bookTableBody.appendChild(tr);
         });
+
+        document.querySelectorAll("update-btn").forEach(btn => {
+            btn.addEventListener("click", updateBook);
+        });
+
+        document.querySelectorAll("delete-btn").forEach(btn => {
+            btn.addEventListener("click", deleteBook);
+        });
     }
 
     // skapar ny bok
