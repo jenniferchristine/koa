@@ -27,11 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${book.read ? 'Ja' : 'Nej'}</td>
         <td>
             <div class="btn-container">
-               <button class="update-btn" data-id="${book._id}">
-                  <span class="symbol material-symbols-outlined">change_circle</span>
+               <button class="update-btn material-symbols-outlined" data-id="${book._id}">
+                  change_circle
                </button>
-               <button class="delete-btn" data-id="${book._id}">
-                  <span class="symbol material-symbols-outlined">delete</span>
+               <button class="delete-btn material-symbols-outlined" data-id="${book._id}">
+                  delete
                </button>
             </div>
         </td>
@@ -76,8 +76,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     async function updateBook(e) {
-        const id = e.target.closest("button").dataset.id;
+        const id = e.target.dataset.id;
         console.log("ID: ", id);
+        console.log("e.target.dataset: ", e.target.dataset);
+        console.log("e.target: ", e.target);
 
         const res = await fetch(`http://localhost:5000/books/${id}`);
         const book = await res.json();
@@ -94,8 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         console.log("Ska skickas: ", updatedBook);
 
-        /*try {*/
-        const resPut = await fetch(`http://localhost:5000/books/${id}`, {
+        try {
+        const res = await fetch(`http://localhost:5000/books/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(updatedBook)
@@ -103,13 +105,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!res.ok) throw new Error("Boken kunde inte uppdateras");
 
-        /*fetchBooks();
+        fetchBooks();
     } catch (err) {
         console.error(err);
-    }*/
+    }
 
-        console.log("PUT Status: ", resPut.status);
-        const data = await resPut.json().catch(err => console.log("Ingen JSON:", err));
+        console.log("PUT Status: ", res.status);
+        const data = await res.json().catch(err => console.log("Ingen JSON:", err));
         console.log("Respons från servern:", data);
     }
 

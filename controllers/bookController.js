@@ -10,11 +10,15 @@ exports.getAllBooks = async (ctx) => {
 
 // hämta bok med id
 exports.getBookById = async (ctx) => {
-    const id = ctx.paramd.id;
+    const id = ctx.params.id;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         ctx.throw(400, "Invalid ID");
     }
+
+    const book = await Book.findById(id);
+    if (!book) ctx.throw(404, "Book not found");
+    ctx.body = book;
 };
 
 // lägg till bok
@@ -28,24 +32,19 @@ exports.createBook = async (ctx) => {
 exports.updateBook = async (ctx) => {
     const id = ctx.params.id;
 
-    console.log("ID: ", id);
-    console.log("BODY: ", ctx.request.body);
-
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        ctx.throw(400, "Invalid ID");
+        ctx.throw(400, "Invalid ObjectID");
     }
 
     const updated = await Book.findByIdAndUpdate(id, ctx.request.body, { new: true });
 
-    console.log("UPDATED: ", updated); 
-    
     if (!updated) ctx.throw(404, "Book not updated");
     ctx.body = updated;
 };
 
 // radera en bok
 exports.deleteBook = async (ctx) => {
-    const id = ctx.paramd.id;
+    const id = ctx.params.id;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         ctx.throw(400, "Invalid ID");

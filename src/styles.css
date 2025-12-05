@@ -112,8 +112,6 @@ button:hover { background-color: rgb(114, 114, 114); }
     border-radius: 0.1em!important;
 }
 
-.symbol { font-size: 20px!important; }
-
 table {
     border-collapse: collapse;
     width: 100%;
