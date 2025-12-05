@@ -3,12 +3,6 @@
 const Book = require("../models/Book");
 const mongoose = require("mongoose");
 
-// funktion för valderingsfel
-/*function validationError {
-    ctx.status = 400;
-    ctx.body = { errors };
-}*/
-
 // hämta alla böcker
 exports.getAllBooks = async (ctx) => {
     try {
