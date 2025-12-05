@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
                <button class="update-btn material-symbols-outlined" data-id="${book._id}">
                   change_circle
                </button>
+               <div class="inline-edit-container" style="display:none";></div>
                <button class="delete-btn material-symbols-outlined" data-id="${book._id}">
                   delete
                </button>
@@ -40,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         document.querySelectorAll(".update-btn").forEach(btn => {
-            btn.addEventListener("click", updateBook);
+            btn.addEventListener("click", showInlineForm(btn));
         });
 
         /*document.querySelectorAll(".delete-btn").forEach(btn => {
@@ -113,7 +114,45 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    
+    async function showInlineForm(btn) {
+        const tr = btn.closest("tr");
+        const container = tr.querySelector(".inline-edit-container");
+        const id = btn.dataset.id;
+
+        if (container.style.display === "block") {
+            container.style.display = "none";
+            container.innerHTML = "";
+            return;
+        }
+
+        const book = await fetchBook(id);
+        if (!book) return;
+
+        container.innerHTML = createInlineForm(book);
+        container.style.display = "block";
+
+        container.querySelector(".save-inline-btn").addEventListener("click", () => saveInlineForm(id, container));
+        container.querySelector(".cancel-inline-btn").addEventListener("click", () => {
+            container.style.display = "none";
+            container.innerHTML = "";
+        });
+    }
+
+    function createInlineForm(book) {
+
+    }
+
+    async function saveInlineForm(id, container) {
+
+    }
+
+    function showErrors() {
+
+    }
+
+    function clearErrors() {
+
+    }
 
     // laddar böcker
     fetchBooks();
