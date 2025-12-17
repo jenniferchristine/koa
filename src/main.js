@@ -139,7 +139,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function createInlineForm(book) {
-
+        return `
+        <input type="text" name="title" value="${book.title}" placeholder="Titel">
+        <div class="error-title"></div>
+        <input type="number" name="publication" value="${book.publication}" placeholder="Utgivningsår">
+        <div class="error-publication"></div>
+        <label><input type="checkbox" name="read" ${book.read ? "checked" : ""}>Läst</label>
+        <button class="save-inline-btn">Spara</button>
+        <button class="cancel-inline-btn">Avbryt</button>
+        `;
     }
 
     async function saveInlineForm(id, container) {
