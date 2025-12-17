@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         document.querySelectorAll(".update-btn").forEach(btn => {
-            btn.addEventListener("click", showInlineForm(btn));
+            btn.addEventListener("click", () => showInlineForm(btn));
         });
 
         /*document.querySelectorAll(".delete-btn").forEach(btn => {
@@ -81,21 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    function createInlineForm(book) {
-        return `
-        <input type="text" name="title" value="${book.title}" placeholder="Titel">
-        <div class="error-title"></div>
-
-        <input type="number" name="publication" value="${book.publication}" placeholder="Utgivningsår">
-        <div class="error-publication"></div>
-
-        <label><input type="checkbox" name="read" ${book.read ? "checked" : ""}>Läst</label>
-
-        <button class="save-inline-btn">Spara</button>
-        <button class="cancel-inline-btn">Avbryt</button>
-        `;
-    }
-
     async function showInlineForm(btn) {
         const tr = btn.closest("tr");
         const container = tr.querySelector(".inline-edit-container");
@@ -120,6 +105,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    function createInlineForm(book) {
+        return `
+        <input type="text" name="title" value="${book.title}" placeholder="Titel">
+        <div class="error-title"></div>
+
+        <input type="number" name="publication" value="${book.publication}" placeholder="Utgivningsår">
+        <div class="error-publication"></div>
+
+        <label><input type="checkbox" name="read" ${book.read ? "checked" : ""}>Läst</label>
+
+        <button class="save-inline-btn">Spara</button>
+        <button class="cancel-inline-btn">Avbryt</button>
+        `;
+    }
+
     async function saveInlineForm(id, container) {
         clearErrors(container);
 
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const res = await fetch(`${API_URL}/${id}`, {
-                method: "POST",
+                method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updatedBook)
             });
