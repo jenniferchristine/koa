@@ -38,7 +38,16 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
         </td>
         `;
+
+        const inlineWrapper = document.createElement("div");
+        inlineWrapper.classList.add("inline-wrapper");
+        inlineWrapper.style.display = "none";
+        inlineWrapper.innerHTML = `
+        <div class="inline-edit-container"></div>
+        `;
+
             bookTableBody.appendChild(tr);
+            bookTableBody.appendChild(inlineWrapper);
         });
 
         document.querySelectorAll(".update-btn").forEach(btn => {
@@ -83,11 +92,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function showInlineForm(btn) {
         const tr = btn.closest("tr");
-        const container = tr.querySelector(".inline-edit-container");
+        const wrapper = tr.nextElementSibling;
+        const container = wrapper.querySelector(".inline-edit-container");
         const id = btn.dataset.id;
 
-        if (container.style.display === "block") {
-            container.style.display = "none";
+        if (wrapper.style.display === "block") {
+            wrapper.style.display = "none";
             container.innerHTML = "";
             return;
         }
@@ -96,11 +106,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!book) return;
 
         container.innerHTML = createInlineForm(book);
-        container.style.display = "block";
+        wrapper.style.display = "block";
 
         container.querySelector(".save-inline-btn").addEventListener("click", () => saveInlineForm(id, container));
         container.querySelector(".cancel-inline-btn").addEventListener("click", () => {
-            container.style.display = "none";
+            wrapper.style.display = "none";
             container.innerHTML = "";
         });
     }
