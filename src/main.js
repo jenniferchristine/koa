@@ -3,11 +3,12 @@
 document.addEventListener("DOMContentLoaded", () => {
     const bookForm = document.getElementById("bookForm");
     const bookTableBody = document.querySelector("#bookTable tbody");
+    const API_URL = "http://localhost:5000/books";
 
     // hämtar böcker när siddan laddas
     async function fetchBooks() {
         try {
-            const res = await fetch("http://localhost:5000/books");
+            const res = await fetch(API_URL);
             const books = await res.json();
             renderTable(books);
         } catch (err) {
@@ -60,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const newBook = { title, publication, read };
 
         try {
-            const res = await fetch("http://localhost:5000/books", {
+            const res = await fetch(API_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newBook)
