@@ -81,6 +81,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    function createInlineForm(book) {
+        return `
+        <input type="text" name="title" value="${book.title}" placeholder="Titel">
+        <div class="error-title"></div>
+
+        <input type="number" name="publication" value="${book.publication}" placeholder="Utgivningsår">
+        <div class="error-publication"></div>
+
+        <label><input type="checkbox" name="read" ${book.read ? "checked" : ""}>Läst</label>
+
+        <button class="save-inline-btn">Spara</button>
+        <button class="cancel-inline-btn">Avbryt</button>
+        `;
+    }
+
     async function showInlineForm(btn) {
         const tr = btn.closest("tr");
         const container = tr.querySelector(".inline-edit-container");
@@ -105,24 +120,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function createInlineForm(book) {
-        return `
-        <input type="text" name="title" value="${book.title}" placeholder="Titel">
-        <div class="error-title"></div>
-
-        <input type="number" name="publication" value="${book.publication}" placeholder="Utgivningsår">
-        <div class="error-publication"></div>
-
-        <label><input type="checkbox" name="read" ${book.read ? "checked" : ""}>Läst</label>
-
-        <button class="save-inline-btn">Spara</button>
-        <button class="cancel-inline-btn">Avbryt</button>
-        `;
-    }
-
     async function saveInlineForm(id, container) {
         clearErrors(container);
-        
+
         const updatedBook = {
             title: container.querySelector('input[name="title"]').value.trim(),
             publication: container.querySelector('input[name="publication"]').value.trim(),
@@ -147,6 +147,11 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (err) {
             console.error("Fel vid uppdatering: ", err);
         }
+    }
+
+    async function fetchBook(id) {
+        const res = await fetch(`${API_URL}/${id}`);
+        return res.ok ? res.json() : null;
     }
 
     function showErrors(container, errors = {}) {
