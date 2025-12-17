@@ -75,45 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    async function updateBook(e) {
-        try {
-            const btn = e.target.closest("button");
-            const id = btn.dataset.id;
-
-            if (!id) return alert("Fel: ID kunde inte hämtas");
-
-            // hämta aktuell bok
-            const res = await fetch(`http://localhost:5000/books/${id}`);
-            if (!res.ok) throw new Error("Boken kunde inte hämtas");
-            const book = await res.json();
-
-            // prompt för nya värden
-            const newTitle = prompt("Ny titel: ", book.title);
-            if (!newTitle) return;
-
-            const newPublication = Number(prompt("Nytt utgivningsår: ", book.publication));
-            if (isNaN(newPublication)) return;
-
-            const newRead = prompt("Har du läst den? (ja/nej)").toLowerCase() === "ja";
-
-            const updatedBook = { title: newTitle, publication: newPublication, read: newRead };
-
-            // skicka PUT
-            const resPut = await fetch(`http://localhost:5000/books/${id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(updatedBook)
-            });
-
-            if (!resPut.ok) throw new Error("Boken kunde inte uppdateras");
-
-            fetchBooks();
-        } catch (err) {
-            console.error("Fel vid uppdatering:", err);
-            alert(err.message);
-        }
-    }
-
     async function showInlineForm(btn) {
         const tr = btn.closest("tr");
         const container = tr.querySelector(".inline-edit-container");
@@ -151,7 +112,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function saveInlineForm(id, container) {
+        const newTitle = container.querySelector('input[name="title"]').value.trim();
+        const newPublication = container.querySelector('input[name="publication"]').value.trim();
+        const newRead = container.querySelector('input[name="read"]').checked;
 
+        try {
+            const res = await fetch(`http://localhost:5000/books/${id}`, {
+                method
+            });
+        }
     }
 
     function showErrors() {
