@@ -121,7 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function saveInlineForm(id, container) {
-
+        clearErrors(container);
+        
         const updatedBook = {
             title: container.querySelector('input[name="title"]').value.trim(),
             publication: container.querySelector('input[name="publication"]').value.trim(),
@@ -148,12 +149,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function showErrors() {
-
+    function showErrors(container, errors = {}) {
+        if (errors.title) {
+            container.querySelector(".error-title").textContent = errors.title;
+        }
+        if (errors.publication) {
+            container.querySelector(".error-publication").textContent = errors.publication;
+        }
     }
 
-    function clearErrors() {
-
+    function clearErrors(container) {
+        container.querySelectorAll(".error").forEach(el => el.textContent = "");
     }
 
     // laddar böcker
