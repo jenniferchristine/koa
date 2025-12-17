@@ -109,18 +109,43 @@ document.addEventListener("DOMContentLoaded", () => {
         return `
         <input type="text" name="title" value="${book.title}" placeholder="Titel">
         <div class="error-title"></div>
+
         <input type="number" name="publication" value="${book.publication}" placeholder="Utgivningsår">
         <div class="error-publication"></div>
+
         <label><input type="checkbox" name="read" ${book.read ? "checked" : ""}>Läst</label>
+
         <button class="save-inline-btn">Spara</button>
         <button class="cancel-inline-btn">Avbryt</button>
         `;
     }
 
     async function saveInlineForm(id, container) {
-        const newTitle = container.querySelector('input[name="title"]').value.trim();
-        const newPublication = container.querySelector('input[name="publication"]').value.trim();
-        const newRead = container.querySelector('input[name="read"]').checked;
+
+        const updatedBook = {
+            title: container.querySelector('input[name="title"]').value.trim(),
+            publication: container.querySelector('input[name="publication"]').value.trim(),
+            read: container.querySelector('input[name="read"]').checked
+        };
+
+        try {
+            const res = await fetch(`${API_URL}/${id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedBook)
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                showErrors(container, data.errors);
+                return;
+            }
+
+            fetchAllBooks();
+        } catch (err) {
+            console.error("Fel vid uppdatering: ", err);
+        }
     }
 
     function showErrors() {
