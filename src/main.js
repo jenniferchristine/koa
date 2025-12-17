@@ -3,7 +3,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const bookForm = document.getElementById("bookForm");
     const bookTableBody = document.querySelector("#bookTable tbody");
-    const API_URL = "http://localhost:5000/books";
+    const API_URL = "https://koa-13bx.onrender.com/books";
 
     // hämtar böcker när siddan laddas
     async function fetchAllBooks() {
