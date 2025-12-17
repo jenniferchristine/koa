@@ -54,11 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
     bookForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const title = document.getElementById("title").value;
-        const publication = Number(document.getElementById("publication").value);
-        const read = document.getElementById("read").checked;
-
-        const newBook = { title, publication, read };
+        const newBook = {
+            title: document.getElementById("title").value,
+            publication: Number(document.getElementById("publication").value),
+            read: document.getElementById("read").checked
+        }
 
         try {
             const res = await fetch(API_URL, {
@@ -67,10 +67,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify(newBook)
             });
 
-            if (!res.ok) throw new Error("Boken kunde inte läggas till");
-            fetchAllBooks();
+            const data = await res.json();
+
+            if (!res.ok) {
+                showErrors(bookForm, data.errors);
+                return;
+            }
 
             bookForm.reset();
+            fetchAllBooks();
         } catch (err) {
             console.error(err);
         }
