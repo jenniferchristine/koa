@@ -39,10 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
         </td>
         `;
 
-        const inlineWrapper = document.createElement("div");
-        inlineWrapper.classList.add("inline-wrapper");
-        inlineWrapper.style.display = "none";
-        inlineWrapper.innerHTML = `
+            const inlineWrapper = document.createElement("div");
+            inlineWrapper.classList.add("inline-wrapper");
+            inlineWrapper.style.display = "none";
+            inlineWrapper.innerHTML = `
         <div class="inline-edit-container"></div>
         `;
 
@@ -54,9 +54,9 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.addEventListener("click", () => showInlineForm(btn));
         });
 
-        /*document.querySelectorAll(".delete-btn").forEach(btn => {
+        document.querySelectorAll(".delete-btn").forEach(btn => {
             btn.addEventListener("click", deleteBook);
-        });*/
+        });
     }
 
     // skapar ny bok
@@ -157,6 +157,23 @@ document.addEventListener("DOMContentLoaded", () => {
             fetchAllBooks();
         } catch (err) {
             console.error("Fel vid uppdatering: ", err);
+        }
+    }
+
+    // radera bok
+    async function deleteBook(e) {
+        const id = e.target.dataset.id;
+        if (!confirm("Är du säker på att du vill ta bort denna bok?")) return;
+
+        try {
+            const res = await fetch(`${API_URL}/${id}`, {
+                method: "DELETE"
+            });
+
+            if (!res.ok) throw new Error("Bok kunde inte raderas");
+            fetchAllBooks();
+        } catch (err) {
+            console.error(err);
         }
     }
 
