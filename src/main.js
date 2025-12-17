@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const API_URL = "http://localhost:5000/books";
 
     // hämtar böcker när siddan laddas
-    async function fetchBooks() {
+    async function fetchAllBooks() {
         try {
             const res = await fetch(API_URL);
             const books = await res.json();
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (!res.ok) throw new Error("Boken kunde inte läggas till");
-            fetchBooks();
+            fetchAllBooks();
 
             bookForm.reset();
         } catch (err) {
@@ -116,12 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const newTitle = container.querySelector('input[name="title"]').value.trim();
         const newPublication = container.querySelector('input[name="publication"]').value.trim();
         const newRead = container.querySelector('input[name="read"]').checked;
-
-        try {
-            const res = await fetch(`http://localhost:5000/books/${id}`, {
-                method
-            });
-        }
     }
 
     function showErrors() {
@@ -133,5 +127,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // laddar böcker
-    fetchBooks();
+    fetchAllBooks();
 });
