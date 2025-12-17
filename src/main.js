@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // skapar ny bok
     bookForm.addEventListener("submit", async (e) => {
         e.preventDefault();
+        clearErrors(bookForm);
 
         const newBook = {
             title: document.getElementById("title").value,

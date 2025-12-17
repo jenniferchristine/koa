@@ -12,7 +12,7 @@ const bookSchema = new mongoose.Schema({
     publication: { 
         type: Number, 
         required: [true, "Utgivningsår måste anges"], 
-        min: [0, "Utgivningsår kan inte vara 0"],
+        min: [1, "Utgivningsår måste anges och kan inte anges som 0"],
         validate: {
             validator: Number.isInteger,
             message: "Utgivningsår måste vara ett heltal"

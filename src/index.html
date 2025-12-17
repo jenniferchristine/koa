@@ -26,8 +26,11 @@
                     <h1>Lägg till bok</h1>
 
                     <form id="bookForm">
-                        <input type="text" id="title" placeholder="Titel" required>
-                        <input type="number" id="publication" placeholder="Utgivningsår" required>
+                        <input type="text" id="title" placeholder="Titel">
+                        <div class="error error-title"></div>
+
+                        <input type="number" id="publication" placeholder="Utgivningsår">
+                        <div class="error error-publication"></div>
                         <br>
                         <label>
                             Läst:
