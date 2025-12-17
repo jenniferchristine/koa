@@ -118,10 +118,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function createInlineForm(book) {
         return `
         <input type="text" name="title" value="${book.title}" placeholder="Titel">
-        <div class="error-title"></div>
+        <div class="error error-title"></div>
 
         <input type="number" name="publication" value="${book.publication}" placeholder="Utgivningsår">
-        <div class="error-publication"></div>
+        <div class="error error-publication"></div>
 
         <label><input type="checkbox" name="read" ${book.read ? "checked" : ""}>Läst</label>
 
