@@ -22,7 +22,7 @@ Publicerad webbtjänst: [https://koa-13bx.onrender.com/books/]
 
 <br>
 
-##### Ett objekt returneras/skickas som JSON med följande struktur:
+#### Ett objekt returneras/skickas som JSON med följande struktur:
 #### /books:
 
 ```json
