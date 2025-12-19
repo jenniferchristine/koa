@@ -1,3 +1,5 @@
+/*API routes till webbtjänst, med Koa Router, via controller-funktioner*/ 
+
 "use strict";
 
 const Router = require("@koa/router");

@@ -1,5 +1,6 @@
 "use strict";
 
+// körs när domen laddats
 document.addEventListener("DOMContentLoaded", () => {
     const bookForm = document.getElementById("bookForm");
     const bookTableBody = document.querySelector("#bookTable tbody");
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderTable(books) {
         bookTableBody.innerHTML = "";
 
-        books.forEach(book => {
+        books.forEach(book => { // skapar rad för bok
             const tr = document.createElement("tr");
             tr.innerHTML = `
         <td>${book.title}</td>
@@ -50,10 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
             bookTableBody.appendChild(inlineWrapper);
         });
 
+        // event för uppdatering
         document.querySelectorAll(".update-btn").forEach(btn => {
             btn.addEventListener("click", () => showInlineForm(btn));
         });
 
+        // event för att radera
         document.querySelectorAll(".delete-btn").forEach(btn => {
             btn.addEventListener("click", deleteBook);
         });
@@ -64,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         clearErrors(bookForm);
 
+        // samlar in värden från formuläret
         const newBook = {
             title: document.getElementById("title").value,
             publication: Number(document.getElementById("publication").value),
@@ -79,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const data = await res.json();
 
-            if (!res.ok) {
+            if (!res.ok) { // visar valideringsfel från backend
                 showErrors(bookForm, data.errors);
                 return;
             }
@@ -91,6 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // visar inlineformulär
     async function showInlineForm(btn) {
         const tr = btn.closest("tr");
         const wrapper = tr.nextElementSibling;
@@ -102,20 +107,25 @@ document.addEventListener("DOMContentLoaded", () => {
             container.innerHTML = "";
             return;
         }
-
-        const book = await fetchBook(id);
+        
+        // hämtar vald bok
+        const book = await fetchBook(id); 
         if (!book) return;
 
+        // skapar formulär
         container.innerHTML = createInlineForm(book);
         wrapper.style.display = "block";
 
+        // sparar uppdatering
         container.querySelector(".save-inline-btn").addEventListener("click", () => saveInlineForm(id, container));
+        // avbryter
         container.querySelector(".cancel-inline-btn").addEventListener("click", () => {
             wrapper.style.display = "none";
             container.innerHTML = "";
         });
     }
 
+    // skapar inlineformulär
     function createInlineForm(book) {
         return `
         <input type="text" name="title" value="${book.title}" placeholder="Titel">
@@ -131,6 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     }
 
+    // sparar uppdaterad bok
     async function saveInlineForm(id, container) {
         clearErrors(container);
 
@@ -160,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // radera bok
+    // raderar bok
     async function deleteBook(e) {
         const id = e.target.dataset.id;
         if (!confirm("Är du säker på att du vill ta bort denna bok?")) return;
@@ -177,11 +188,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // hjälpfunktion för specifik bok
     async function fetchBook(id) {
         const res = await fetch(`${API_URL}/${id}`);
         return res.ok ? res.json() : null;
     }
 
+    // funktion för att visa backend valdering
     function showErrors(container, errors = {}) {
         if (errors.title) {
             container.querySelector(".error-title").textContent = errors.title;
@@ -191,6 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // funktion för att rensa felmeddelanden
     function clearErrors(container) {
         container.querySelectorAll(".error").forEach(el => el.textContent = "");
     }

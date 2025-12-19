@@ -2,7 +2,7 @@
 
 const mongoose = require("mongoose");
 
-// skapa bookschema
+// skapa bookschema, validering
 const bookSchema = new mongoose.Schema({
     title: { 
         type: String, 

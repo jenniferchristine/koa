@@ -1,14 +1,14 @@
 "use strict";
 
-const Koa = require("koa");
-const bodyParser = require("koa-bodyparser");
-const mongoose = require("mongoose");
-const cors = require("@koa/cors");
-const bookRoutes = require("./routes/bookRoutes");
+const Koa = require("koa"); // importerar koa
+const bodyParser = require("koa-bodyparser"); // middleware för att läsa json
+const mongoose = require("mongoose"); // mongoose för anslutning till mongodb
+const cors = require("@koa/cors"); // middleware för anrop
+const bookRoutes = require("./routes/bookRoutes"); // importerar routes för api
 
 require("dotenv").config();
 
-const app = new Koa();
+const app = new Koa(); // ny koa applikation
 
 app.use(cors());
 app.use(bodyParser());
