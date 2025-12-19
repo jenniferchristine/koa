@@ -8,6 +8,8 @@ ReadLog är en enkel CRUD-baserad webbtjänst byggd tillsammans med Koa och Mong
 Publicerad webbplats: [https://koa-moment2.netlify.app/]<br>
 Publicerad webbtjänst: [https://koa-13bx.onrender.com/books/]
 
+<br>
+
  #### Användning av databas:
 
 | Metod | Ändpunkt | Beskrivning |
@@ -20,7 +22,7 @@ Publicerad webbtjänst: [https://koa-13bx.onrender.com/books/]
 
 <br>
 
-### Ett objekt returneras/skickas som JSON med följande struktur:
+##### Ett objekt returneras/skickas som JSON med följande struktur:
 #### /books:
 
 ```json
