@@ -3,7 +3,7 @@
 
 ### Skapa REST-webbtjänst med backend-ramverk
 
-*beskrivning*
+ReadLog är en enkel CRUD-baserad webbtjänst byggd tillsammans med Koa och MongoDB via Mongoose. Webbplatsen hanterar en boklista där man kan lägga till, visa, uppdatera och radera böcker. Tjänsten är rustad med validering och felmeddelanden från backend.
 
 Publicerad webbplats: [https://koa-moment2.netlify.app/]<br>
 Publicerad webbtjänst: [https://koa-13bx.onrender.com/books/]
